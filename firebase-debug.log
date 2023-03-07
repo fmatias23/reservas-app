@@ -1,0 +1,21 @@
+[debug] [2023-03-07T19:35:11.339Z] ----------------------------------------------------------------------
+[debug] [2023-03-07T19:35:11.341Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\fmati\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-03-07T19:35:11.342Z] CLI Version:   11.24.0
+[debug] [2023-03-07T19:35:11.342Z] Platform:      win32
+[debug] [2023-03-07T19:35:11.342Z] Node Version:  v16.17.1
+[debug] [2023-03-07T19:35:11.343Z] Time:          Tue Mar 07 2023 16:35:11 GMT-0300 (hora estándar de Argentina)
+[debug] [2023-03-07T19:35:11.343Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-07T19:35:11.349Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-07T19:35:11.350Z] > authorizing via signed-in user (fmatiasj23@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\fmati\reservas
+
