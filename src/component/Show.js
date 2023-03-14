@@ -7,6 +7,7 @@ import withReactContent from "sweetalert2-react-content";
 import { AiFillEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import "../component/show.css";
+import { Modal, Button } from "react-bootstrap";
 
 const mySwal = withReactContent(Swal);
 
@@ -14,6 +15,7 @@ const Show = () => {
   const [reservas, setReservas] = useState([]);
   const [filtroLugar, setFiltroLugar] = useState("Todos");
   const opciones = ["Todos", "Quinta", "Campo"];
+  const [showMore, setShowMore] = useState(false);
 
   const productsCollection = collection(db, "reservas");
 
@@ -40,7 +42,28 @@ const Show = () => {
     await deleteDoc(productDoc);
     getProducts();
   };
-  console.log(reservas);
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedReserva, setSelectedReserva] = useState(null);
+
+  const handleClose = () => setShowModal(false);
+  const handleOpen = (reserva) => {
+    setSelectedReserva(reserva);
+    setShowModal(true);
+  };
+
+  // Ordena las reservas por fecha
+  const reservasOrdenadas = reservasFiltradas.sort((a, b) => {
+    const fechaA = a.entrada.toDate();
+    const fechaB = b.entrada.toDate();
+    if (fechaA < fechaB) {
+      return -1;
+    } else if (fechaA > fechaB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   const confirmeDelete = (id) => {
     mySwal
@@ -65,10 +88,9 @@ const Show = () => {
     getProducts();
     // eslint-disable-next-line
   }, []);
-
   return (
     <>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col">
             <div className="d-grid w-100vh">
@@ -78,6 +100,7 @@ const Show = () => {
                 style={{
                   marginBottom: "10px",
                   marginTop: "10px",
+                  boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
                 }}
               >
                 Agregar Reserva
@@ -99,74 +122,114 @@ const Show = () => {
               </div>
             </div>
 
-            <table className="table table-light table-hover">
+            <table className="table table-light table-hover table-responsive">
               <thead>
                 <tr>
                   <th>Nombre</th>
                   <th>Entrada</th>
                   <th>Salida</th>
-                  <th>Telefono</th>
-
-                  <th>Pago</th>
 
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                {reservasFiltradas.map((reserva) => (
-                  <tr key={reserva.id} style={{ height: "60px" }}>
-                    <td>{reserva.descripcion}</td>
-                    <td>
-                      {new Date(reserva.entrada.seconds * 1000).getDate()}/
-                      {new Date(reserva.entrada.seconds * 1000).getMonth() + 1}/
-                      {new Date(reserva.entrada.seconds * 1000).getFullYear()}
-                    </td>
-                    <td>
-                      {new Date(reserva.salida.seconds * 1000).getDate()}/
-                      {new Date(reserva.salida.seconds * 1000).getMonth() + 1}/
-                      {new Date(reserva.salida.seconds * 1000).getFullYear()}
-                    </td>
-
-                    <td>{reserva.telefono}</td>
-
-                    <td>
-                      <div
-                        className="circle"
-                        style={{
-                          backgroundColor:
-                            reserva.pago === "pago-completo" ? "green" : "gray",
-                        }}
-                      >
-                        {reserva.pago === "seña" && (
-                          <div className="half-circle" />
-                        )}
-                      </div>
-                    </td>
-
-                    <td
-                      className="d-flex justify-content-end"
-                      style={{ height: "67px" }}
+              <tbody className={showMore ? "" : "hide-rows"}>
+                {reservasOrdenadas
+                  .slice(0, showMore ? reservasOrdenadas.length : 10)
+                  .map((reserva) => (
+                    <tr
+                      key={reserva.id}
+                      style={{ height: "60px" }}
+                      onClick={() => handleOpen(reserva)}
                     >
-                      <Link
-                        to={`/edit/${reserva.id}`}
-                        className="btn btn-light me-2"
-                      >
-                        <AiFillEdit />
-                      </Link>
+                      <td>{reserva.descripcion}</td>
+                      <td>
+                        {new Date(reserva.entrada.seconds * 1000).getDate()}/
+                        {new Date(reserva.entrada.seconds * 1000).getMonth() +
+                          1}
+                        /
+                        {new Date(reserva.entrada.seconds * 1000).getFullYear()}
+                      </td>
+                      <td>
+                        {new Date(reserva.salida.seconds * 1000).getDate()}/
+                        {new Date(reserva.salida.seconds * 1000).getMonth() + 1}
+                        /{new Date(reserva.salida.seconds * 1000).getFullYear()}
+                      </td>
 
-                      <button
-                        onClick={() => {
-                          confirmeDelete(reserva.id);
-                        }}
-                        className="btn btn-danger"
+                      <td
+                        className="d-flex justify-content-end"
+                        style={{ height: "67px" }}
                       >
-                        <AiOutlineDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                        <Link
+                          to={`/edit/${reserva.id}`}
+                          className="btn btn-light me-2"
+                        >
+                          <AiFillEdit />
+                        </Link>
+
+                        <button
+                          onClick={() => {
+                            confirmeDelete(reserva.id);
+                          }}
+                          className="btn btn-danger"
+                        >
+                          <AiOutlineDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
+              <div className="verMas">
+                {showMore ? (
+                  <Link className="ver-mas" onClick={() => setShowMore(false)}>
+                    Ocultar
+                  </Link>
+                ) : (
+                  <Link className="ver-menos" onClick={() => setShowMore(true)}>
+                    Ver más
+                  </Link>
+                )}
+              </div>
             </table>
+
+            {selectedReserva && (
+              <Modal show={showModal} onHide={handleClose}>
+                <Modal.Header closeButton className="header-modal">
+                  <Modal.Title>Detalles de la reserva</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>
+                    <strong>Nombre:</strong> {selectedReserva.descripcion}
+                  </p>
+                  <p>
+                    <strong>Entrada: </strong>
+
+                    {selectedReserva.entrada.toDate().toLocaleDateString()}
+                  </p>
+                  <p>
+                    <strong>Salida: </strong>
+
+                    {selectedReserva.salida.toDate().toLocaleDateString()}
+                  </p>
+                  <p>
+                    <strong>Teléfono:</strong> {selectedReserva.telefono}
+                  </p>
+                  <p>
+                    <strong>Cuil:</strong> {selectedReserva.cuil}
+                  </p>
+                  <p>
+                    <strong>Pago:</strong> {selectedReserva.pago}
+                  </p>
+                  <p>
+                    <strong>Comentario:</strong> {selectedReserva.comentario}
+                  </p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="danger" onClick={handleClose}>
+                    Cerrar
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            )}
           </div>
         </div>
       </div>

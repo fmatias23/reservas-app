@@ -13,6 +13,9 @@ const Create = () => {
   const [telefono, setTelefono] = useState("");
   const [pago, setPago] = useState("");
   const [lugar, setLugar] = useState("");
+  const [cuil, setCuil] = useState("");
+  const [comentario, setComentario] = useState("");
+
   const navigate = useNavigate();
   const reservaCollection = collection(db, "reservas");
 
@@ -42,8 +45,10 @@ const Create = () => {
       entrada: entrada,
       salida: salida,
       telefono: Number(telefono),
+      cuil: Number(cuil),
       pago: pago,
       lugar: lugar,
+      comentario: comentario,
     });
 
     navigate("/");
@@ -60,9 +65,10 @@ const Create = () => {
           <h1 className="d-flex justify-content-center mb-4 mt-2">
             Nueva Reserva
           </h1>
+
           <Dropdown className="d-flex justify-content-center mb-4 mt-2">
             <Dropdown.Toggle variant="primary" id="dropdown-basic ">
-              Lugar de reserva
+              Seleccionar ligar: {lugar}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -74,6 +80,7 @@ const Create = () => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+
           <form onSubmit={reserve}>
             <div className="mb-3">
               <label className="form-label">
@@ -111,14 +118,35 @@ const Create = () => {
             </div>
             <div className="mb-3">
               <label className="form-label">
-                <h6>Tipo de pago</h6>
+                <h6>Cuil:</h6>
+              </label>
+              <input
+                value={cuil}
+                onChange={(e) => setCuil(e.target.value)}
+                type="text"
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">
+                <h6>Comentarios:</h6>
+              </label>
+              <textarea
+                value={comentario}
+                onChange={(e) => setComentario(e.target.value)}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">
+                <h6>Tipo de pago:</h6>
               </label>
               <div>
                 <input
                   type="radio"
                   id="senia"
                   name="tipo-pago"
-                  value="senia"
+                  value="seña"
                   onChange={(e) => setPago(e.target.value)}
                   // Actualizamos el estado tipoPago
                 />
@@ -135,6 +163,7 @@ const Create = () => {
                 <label htmlFor="pago-completo">Pago completo</label>
               </div>
             </div>
+
             <div className="d-flex justify-content-center">
               <button type="submit" className="btn btn-primary mx-2">
                 Crear

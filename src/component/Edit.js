@@ -13,6 +13,8 @@ const Edit = () => {
   const [telefono, setTelefono] = useState("");
   const [pago, setPago] = useState("");
   const [lugar, setLugar] = useState("");
+  const [cuil, setCuil] = useState("");
+  const [comentario, setComentario] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,8 +27,10 @@ const Edit = () => {
       entrada: entrada,
       salida: salida,
       telefono: Number(telefono),
+      cuil: Number(cuil),
       pago: pago,
       lugar: lugar,
+      comentario: comentario,
     };
     await updateDoc(reserva, data);
     navigate("/");
@@ -61,7 +65,7 @@ const Edit = () => {
           </h1>
           <Dropdown className="d-flex justify-content-center mb-4 mt-2">
             <Dropdown.Toggle variant="primary" id="dropdown-basic ">
-              Lugar de reserva
+              seleccionar lugar: {lugar}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -105,6 +109,27 @@ const Edit = () => {
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
                 type="tel"
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">
+                <h6>Cuil:</h6>
+              </label>
+              <input
+                value={cuil}
+                onChange={(e) => setCuil(e.target.value)}
+                type="text"
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">
+                <h6>Comentarios:</h6>
+              </label>
+              <textarea
+                value={comentario}
+                onChange={(e) => setComentario(e.target.value)}
                 className="form-control"
               />
             </div>

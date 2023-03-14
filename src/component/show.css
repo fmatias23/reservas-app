@@ -14,4 +14,63 @@
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
   }
+
+
+  .container {
+    max-width: 100%;
+    
+ 
+  }
+
+  .table {
+    max-width: 100%;
+    font-size: 12px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    
+  
+  }
+
+  .col {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+
+  .header-modal {
+    background-color: #42a739c9;
+  }
+
+
+  .hide-rows tr:nth-child(n+11) {
+    display: none;
+  }
+
+
+  .ver-mas, .ver-menos {
+    text-decoration: none;
+    font-size: 16px;
+    color: rgb(15, 14, 14);
+    /*border: solid 0.1px;*/
+    padding: 4px;
+    border-radius: 3px;
+    background-color: #6bb7c547;
+    
+   
+  }
+
+  
+  .verMas {
+    margin-left: 4px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    
+  }
+ 
+
+  
+
+
+
+  
   
