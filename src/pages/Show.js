@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig/firebase";
@@ -6,8 +6,9 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { AiFillEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
-import "../component/show.css";
+import "../styles/show.css";
 import { Modal, Button } from "react-bootstrap";
+import { AuthContext } from "../context/AuthContext";
 
 const mySwal = withReactContent(Swal);
 
@@ -16,6 +17,11 @@ const Show = () => {
   const [filtroLugar, setFiltroLugar] = useState("Todos");
   const opciones = ["Todos", "Quinta", "Campo"];
   const [showMore, setShowMore] = useState(false);
+
+  const { cerrarSesion } = useContext(AuthContext);
+  const handleCerrarSesion = async () => {
+    await cerrarSesion();
+  };
 
   const productsCollection = collection(db, "reservas");
 
@@ -88,8 +94,13 @@ const Show = () => {
     getProducts();
     // eslint-disable-next-line
   }, []);
+
   return (
     <>
+      <button onClick={handleCerrarSesion} class="logout-button">
+        <span className="close-icon">X</span>
+      </button>
+
       <div className="container-fluid">
         <div className="row">
           <div className="col">
@@ -106,6 +117,7 @@ const Show = () => {
                 Agregar Reserva
               </Link>
             </div>
+
             <div>
               <div>
                 <select
@@ -178,18 +190,18 @@ const Show = () => {
                     </tr>
                   ))}
               </tbody>
-              <div className="verMas">
-                {showMore ? (
-                  <Link className="ver-mas" onClick={() => setShowMore(false)}>
-                    Ocultar
-                  </Link>
-                ) : (
-                  <Link className="ver-menos" onClick={() => setShowMore(true)}>
-                    Ver más
-                  </Link>
-                )}
-              </div>
             </table>
+            <div className="verMas">
+              {showMore ? (
+                <Link className="ver-mas" onClick={() => setShowMore(false)}>
+                  Ocultar
+                </Link>
+              ) : (
+                <Link className="ver-menos" onClick={() => setShowMore(true)}>
+                  Ver más
+                </Link>
+              )}
+            </div>
 
             {selectedReserva && (
               <Modal show={showModal} onHide={handleClose}>

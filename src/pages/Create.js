@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDoc, updateDoc, doc } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore"; // Import getDocs, query, and where
 import { db } from "../firebaseConfig/firebase";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Dropdown from "react-bootstrap/Dropdown";
 
-const Edit = () => {
+const Create = () => {
   const [descripcion, setDescripcion] = useState("");
-  const [entrada, setEntrada] = useState(new Date());
-  const [salida, setSalida] = useState(new Date());
+  const [entrada, setEntrada] = useState();
+  const [salida, setSalida] = useState();
   const [telefono, setTelefono] = useState("");
   const [pago, setPago] = useState("");
   const [lugar, setLugar] = useState("");
@@ -17,12 +17,30 @@ const Edit = () => {
   const [comentario, setComentario] = useState("");
 
   const navigate = useNavigate();
-  const { id } = useParams();
+  const reservaCollection = collection(db, "reservas");
 
-  const Update = async (e) => {
+  useEffect(() => {
+    const checkDates = async () => {
+      const q = query(
+        reservaCollection,
+        where("entrada", "==", entrada),
+        where("salida", "==", salida)
+      );
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.docs.length > 0) {
+        alert("Esta fecha no está disponible.");
+      }
+    };
+
+    if (entrada && salida) {
+      checkDates();
+    }
+  }, [entrada, salida, reservaCollection]);
+
+  const reserve = async (e) => {
     e.preventDefault();
-    const reserva = doc(db, "reservas", id);
-    const data = {
+
+    await addDoc(reservaCollection, {
       descripcion: descripcion,
       entrada: entrada,
       salida: salida,
@@ -31,41 +49,26 @@ const Edit = () => {
       pago: pago,
       lugar: lugar,
       comentario: comentario,
-    };
-    await updateDoc(reserva, data);
-    navigate("/");
-  };
+    });
 
-  const getReservaById = async (id) => {
-    const reserva = await getDoc(doc(db, "reservas", id));
-    if (reserva.exists()) {
-      setDescripcion(reserva.data().descripcion);
-      setEntrada(new Date(reserva.data().entrada.seconds * 1000));
-      setSalida(new Date(reserva.data().salida.seconds * 1000));
-      setTelefono(reserva.data().telefono.toString());
-      setPago(reserva.data().pago);
-    }
+    navigate("/");
   };
 
   const goShow = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    getReservaById(id);
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <div className="container">
       <div className="row mb-4">
         <div className="col">
           <h1 className="d-flex justify-content-center mb-4 mt-2">
-            Editar Reserva
+            Nueva Reserva
           </h1>
+
           <Dropdown className="d-flex justify-content-center mb-4 mt-2">
             <Dropdown.Toggle variant="primary" id="dropdown-basic ">
-              seleccionar lugar: {lugar}
+              seleccionar: {lugar}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -77,7 +80,8 @@ const Edit = () => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <form onSubmit={Update}>
+
+          <form onSubmit={reserve}>
             <div className="mb-3">
               <label className="form-label">
                 <h6>Nombre y Apellido:</h6>
@@ -108,7 +112,7 @@ const Edit = () => {
               <input
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
-                type="tel"
+                type="text"
                 className="form-control"
               />
             </div>
@@ -138,39 +142,35 @@ const Edit = () => {
                 <h6>Tipo de pago:</h6>
               </label>
               <div>
-                <div className="mb-3">
-                  <div style={{ marginBottom: "10px" }}>
-                    <input
-                      type="radio"
-                      id="senia"
-                      name="tipo-pago"
-                      value="senia"
-                      onChange={(e) => setPago(e.target.value)}
-                      checked={pago === "senia"}
-                    />
-                    <label htmlFor="senia">Seña</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="pago-completo"
-                      name="tipo-pago"
-                      value="pago-completo"
-                      onChange={(e) => setPago(e.target.value)}
-                      checked={pago === "pago-completo"}
-                    />
-                    <label htmlFor="pago-completo">Pago completo</label>
-                  </div>
-                </div>
+                <input
+                  type="radio"
+                  id="senia"
+                  name="tipo-pago"
+                  value="seña"
+                  onChange={(e) => setPago(e.target.value)}
+                  // Actualizamos el estado tipoPago
+                />
+                <label htmlFor="senia">Seña</label>
+              </div>
+              <div className="mb-3">
+                <input
+                  type="radio"
+                  id="pago-completo"
+                  name="tipo-pago"
+                  value="pago-completo"
+                  onChange={(e) => setPago(e.target.value)} // Actualizamos el estado tipoPago
+                />
+                <label htmlFor="pago-completo">Pago completo</label>
               </div>
             </div>
+
             <div className="d-flex justify-content-center">
               <button type="submit" className="btn btn-primary mx-2">
-                Editar
+                Crear
               </button>
               <button
                 type="button"
-                className="btn btn-secondary mx-2"
+                className="btn btn-secondary mx-2 mb-10"
                 onClick={goShow}
               >
                 Volver
@@ -183,4 +183,4 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default Create;

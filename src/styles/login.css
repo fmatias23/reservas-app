@@ -1,0 +1,27 @@
+.container-sesion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+   
+    
+  }
+  
+  .inicarSesion {
+    background-color: #1310c7;
+    color: #f2f2f2;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .titleSesion {
+    font-size: 30px;
+    margin-bottom: 15px;
+    font-family: sans-serif;
+  }
+  
