@@ -8,10 +8,11 @@ import { AiFillEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import "../styles/show.css";
 import { Modal, Button } from "react-bootstrap";
+import RFinalizada from "../pages/ReservaFinalizadas";
 
 const mySwal = withReactContent(Swal);
 
-const Show = () => {
+const Show = ({ history }) => {
   const [reservas, setReservas] = useState([]);
   const [filtroLugar, setFiltroLugar] = useState("Todos");
   const opciones = ["Todos", "Quinta", "Campo"];
@@ -63,6 +64,18 @@ const Show = () => {
     } else {
       return 0;
     }
+  });
+
+  const reservaFinalizada = reservasOrdenadas.filter((reserva) => {
+    const salidaDate = new Date(reserva.salida.seconds * 1000);
+    const today = new Date();
+    return salidaDate < today;
+  });
+
+  const reservasPendientes = reservasOrdenadas.filter((reserva) => {
+    const salidaDate = new Date(reserva.salida.seconds * 1000);
+    const today = new Date();
+    return salidaDate >= today;
   });
 
   const confirmeDelete = (id) => {
@@ -130,13 +143,12 @@ const Show = () => {
                   <th>Nombre</th>
                   <th>Entrada</th>
                   <th>Salida</th>
-
                   <th></th>
                 </tr>
               </thead>
               <tbody className={showMore ? "" : "hide-rows"}>
-                {reservasOrdenadas
-                  .slice(0, showMore ? reservasOrdenadas.length : 10)
+                {reservasPendientes
+                  .slice(0, showMore ? reservasPendientes.length : 10)
                   .map((reserva) => (
                     <tr
                       key={reserva.id}
@@ -181,6 +193,7 @@ const Show = () => {
                   ))}
               </tbody>
             </table>
+
             <div className="verMas">
               {showMore ? (
                 <Link className="ver-mas" onClick={() => setShowMore(false)}>
@@ -191,6 +204,14 @@ const Show = () => {
                   Ver más
                 </Link>
               )}
+            </div>
+
+            <div>
+              <h3 className="reserva-finalizada">Mis reservas finalizadas:</h3>
+              <RFinalizada
+                reservasFinalizadas={reservaFinalizada}
+                confirmeDelete={confirmeDelete}
+              />
             </div>
 
             {selectedReserva && (
