@@ -5,6 +5,7 @@ import { db } from "../firebaseConfig/firebase";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import "../styles/create.css";
 
 const Create = () => {
   const [descripcion, setDescripcion] = useState("");
@@ -24,18 +25,19 @@ const Create = () => {
       const q = query(
         reservaCollection,
         where("entrada", "==", entrada),
-        where("salida", "==", salida)
+        where("salida", "==", salida),
+        where("lugar", "==", lugar)
       );
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs.length > 0) {
-        alert("Esta fecha no está disponible.");
+        alert("Esta fecha no está disponible para ese lugar.");
       }
     };
 
-    if (entrada && salida) {
+    if (entrada && salida && lugar) {
       checkDates();
     }
-  }, [entrada, salida, reservaCollection]);
+  }, [entrada, salida, lugar, reservaCollection]);
 
   const reserve = async (e) => {
     e.preventDefault();
@@ -62,13 +64,13 @@ const Create = () => {
     <div className="container">
       <div className="row mb-4">
         <div className="col">
-          <h1 className="d-flex justify-content-center mb-4 mt-2">
+          <h1 className="d-flex justify-content-center mb-4 mt-2 nueva-reserva">
             Nueva Reserva
           </h1>
 
           <Dropdown className="d-flex justify-content-center mb-4 mt-2">
             <Dropdown.Toggle variant="primary" id="dropdown-basic ">
-              seleccionar: {lugar}
+              Lugar : {lugar}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

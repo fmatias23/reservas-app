@@ -8,11 +8,11 @@ import { AiFillEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import "../styles/show.css";
 import { Modal, Button } from "react-bootstrap";
-import RFinalizada from "../pages/ReservaFinalizadas";
+import RFinalizada from "../component/ReservaFinalizadas";
 
 const mySwal = withReactContent(Swal);
 
-const Show = ({ history }) => {
+const Show = () => {
   const [reservas, setReservas] = useState([]);
   const [filtroLugar, setFiltroLugar] = useState("Todos");
   const opciones = ["Todos", "Quinta", "Campo"];
@@ -196,18 +196,18 @@ const Show = ({ history }) => {
 
             <div className="verMas">
               {showMore ? (
-                <Link className="ver-mas" onClick={() => setShowMore(false)}>
+                <button className="ver-mas" onClick={() => setShowMore(false)}>
                   Ocultar
-                </Link>
+                </button>
               ) : (
-                <Link className="ver-menos" onClick={() => setShowMore(true)}>
-                  Ver más
-                </Link>
+                <button className="ver-menos" onClick={() => setShowMore(true)}>
+                  Ver mas
+                </button>
               )}
             </div>
-
+            <hr className="hr"></hr>
             <div>
-              <h3 className="reserva-finalizada">Mis reservas finalizadas:</h3>
+              <h2 className="reserva-finalizada">Reservas finalizadas:</h2>
               <RFinalizada
                 reservasFinalizadas={reservaFinalizada}
                 confirmeDelete={confirmeDelete}
@@ -232,6 +232,9 @@ const Show = ({ history }) => {
                     <strong>Salida: </strong>
 
                     {selectedReserva.salida.toDate().toLocaleDateString()}
+                  </p>
+                  <p>
+                    <strong>Lugar: </strong> {selectedReserva.lugar}
                   </p>
                   <p>
                     <strong>Teléfono:</strong> {selectedReserva.telefono}

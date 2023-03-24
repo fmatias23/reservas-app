@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Creepster&family=Kumbh+Sans:wght@400;700&family=Oxygen&family=Titan+One&display=swap');
 .container-fluid {
     max-width: 100%;
     margin-bottom: 50px;
@@ -33,25 +33,27 @@
 
 
   .ver-mas,
-  .ver-menos {
-   
-    display: flex;
-    background-color: #009ee3;
-    color: #ffffff;
-    font-size: 12px;
-    padding: 12px 32px;
-    text-align: center;
-    justify-content: center;
-    text-decoration: none;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 115px;
-    height: 45px;
-    margin-bottom: 10px;
-    
-  }
+.ver-menos {
+  display: flex;
+  align-items: center; /* Agregado */
+  background-color: #009ee3;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 12px 32px;
+  text-align: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 106px;
+  height: 35px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
   
   .ver-mas:hover,
   .ver-menos:hover {
@@ -66,11 +68,15 @@
  
   
 .reserva-finalizada {
-  font-family: 'Kumbh Sans', sans-serif;
-font-family: 'Oxygen', sans-serif;
+  font-family: Cabin Sketch;
 }
   
-  
+.hr {
+  border-width: 1px;
+  border-color: #1a1919; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+}  
 
  
 
