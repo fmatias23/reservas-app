@@ -53,7 +53,7 @@ const Show = () => {
     setShowModal(true);
   };
 
-  // Ordena las reservas por fecha
+  // Se odenan las reservas por fecha
   const reservasOrdenadas = reservasFiltradas.sort((a, b) => {
     const fechaA = a.entrada.toDate();
     const fechaB = b.entrada.toDate();
