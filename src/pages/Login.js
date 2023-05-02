@@ -84,53 +84,55 @@ const Login = () => {
   }
 
   return (
-    <div className="login-container">
-      <form onSubmit={submitHandler}>
-        <h3 className="title-form">
-          {" "}
-          {/*{registrando ? "Resgistrate" : "Inica sesion"}*/}
-        </h3>
-        <label>
-          <span>
-            <b>Email:</b>
-          </span>
-          <input
-            type="email"
-            value={email}
-            name="email"
-            onChange={handleInputChange}
-          />
-        </label>
+    <div className="container-general">
+      <div className="login-container">
+        <form onSubmit={submitHandler}>
+          <h3 className="title-form">
+            {" "}
+            {/*{registrando ? "Resgistrate" : "Inica sesion"}*/}
+          </h3>
+          <label>
+            <span>
+              <b>Email:</b>
+            </span>
+            <input
+              type="email"
+              value={email}
+              name="email"
+              onChange={handleInputChange}
+            />
+          </label>
 
-        <label>
-          <span>
-            <b>Contraseña:</b>
-          </span>
-          <input
-            type="password"
-            value={password}
-            name="password"
-            onChange={handleInputChange}
-          />
-        </label>
+          <label>
+            <span>
+              <b>Contraseña:</b>
+            </span>
+            <input
+              type="password"
+              value={password}
+              name="password"
+              onChange={handleInputChange}
+            />
+          </label>
 
-        <button
-          className="btn btn-primary"
-          width="100%"
-          text="loggin"
-          onClick={handleLogin}
-        >
-          Iniciar
-        </button>
-        <button
-          className="btn-registrar"
-          width="100%"
-          text="registrar"
-          onClick={() => registrarUsuario(email, password)}
-        >
-          Registrar
-        </button>
-      </form>
+          <button
+            className="btn btn-primary"
+            width="100%"
+            text="loggin"
+            onClick={handleLogin}
+          >
+            Iniciar
+          </button>
+          <button
+            className="btn-registrar"
+            width="100%"
+            text="registrar"
+            onClick={() => registrarUsuario(email, password)}
+          >
+            Registrar
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
