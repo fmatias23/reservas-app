@@ -1,0 +1,59 @@
+body {
+  background-image: url('../image/fondo-loggin.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+
+.login-container {
+  width: 400;
+  margin: 3px;
+  padding: 20px;
+  background-color: #ffffff84;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 250px;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.login-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f7f7f7c1;
+}
+
+.login-container button {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  background-color: #1e90ff;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background-color: #0077b6;
+}

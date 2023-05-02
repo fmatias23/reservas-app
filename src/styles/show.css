@@ -78,6 +78,19 @@
   margin-bottom: 20px;
 }  
 
+
+.container-cerrar-sesion {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px;
+}
+
+.cerrar-Sesion {
+  border-radius: 3px;
+  background-color: rgb(225, 97, 97);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
  
 
   

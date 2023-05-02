@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore"; // Import getDocs, query, and where
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebaseConfig/firebase";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";

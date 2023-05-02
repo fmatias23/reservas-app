@@ -6,11 +6,27 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { AiFillEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
+import { FiLogOut } from "react-icons/fi";
+
 import "../styles/show.css";
 import { Modal, Button } from "react-bootstrap";
 import RFinalizada from "../component/ReservaFinalizadas";
+import app from "../firebaseConfig/firebase";
+import { getAuth, signOut } from "firebase/auth";
+const auth = getAuth(app);
 
 const mySwal = withReactContent(Swal);
+
+const handleLogout = () => {
+  signOut(auth)
+    .then(() => {
+      // Redireccionar a la página de inicio de sesión
+      window.location.href = "/";
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const Show = () => {
   const [reservas, setReservas] = useState([]);
@@ -104,6 +120,11 @@ const Show = () => {
 
   return (
     <>
+      <div className="container-cerrar-sesion">
+        <button className="cerrar-Sesion" onClick={handleLogout}>
+          <FiLogOut />
+        </button>
+      </div>
       <div className="container-fluid">
         <div className="row">
           <div className="col">
@@ -148,7 +169,7 @@ const Show = () => {
               </thead>
               <tbody className={showMore ? "" : "hide-rows"}>
                 {reservasPendientes
-                  .slice(0, showMore ? reservasPendientes.length : 10)
+                  .slice(0, showMore ? reservasPendientes.length : 6)
                   .map((reserva) => (
                     <tr
                       key={reserva.id}
