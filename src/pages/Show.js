@@ -7,9 +7,10 @@ import withReactContent from "sweetalert2-react-content";
 import { AiFillEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
+import { BsFillCalendarXFill } from "react-icons/bs";
 
 import "../styles/show.css";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import RFinalizada from "../component/ReservaFinalizadas";
 import app from "../firebaseConfig/firebase";
 import { getAuth, signOut } from "firebase/auth";
@@ -118,6 +119,12 @@ const Show = () => {
     // eslint-disable-next-line
   }, []);
 
+  const [showReservasFinalizadas, setShowReservasFinalizadas] = useState(false);
+
+  const toggleReservasFinalizadas = () => {
+    setShowReservasFinalizadas(!showReservasFinalizadas);
+  };
+
   return (
     <>
       <div className="container-cerrar-sesion">
@@ -140,6 +147,22 @@ const Show = () => {
               >
                 Agregar Reserva
               </Link>
+            </div>
+
+            <div className="container-icon">
+              <button
+                onClick={toggleReservasFinalizadas}
+                className="btn-icon-rfinalizada"
+              >
+                {" "}
+                <BsFillCalendarXFill className="icon-rfinalizadas" />{" "}
+              </button>{" "}
+              {showReservasFinalizadas && (
+                <RFinalizada
+                  reservasFinalizadas={reservaFinalizada}
+                  confirmeDelete={confirmeDelete}
+                />
+              )}
             </div>
 
             <div>
@@ -169,7 +192,7 @@ const Show = () => {
               </thead>
               <tbody className={showMore ? "" : "hide-rows"}>
                 {reservasPendientes
-                  .slice(0, showMore ? reservasPendientes.length : 6)
+                  .slice(0, showMore ? reservasPendientes.length : 8)
                   .map((reserva) => (
                     <tr
                       key={reserva.id}
@@ -226,14 +249,6 @@ const Show = () => {
                 </button>
               )}
             </div>
-            <hr className="hr"></hr>
-            <div>
-              <h2 className="reserva-finalizada">Reservas finalizadas:</h2>
-              <RFinalizada
-                reservasFinalizadas={reservaFinalizada}
-                confirmeDelete={confirmeDelete}
-              />
-            </div>
 
             {selectedReserva && (
               <Modal show={showModal} onHide={handleClose}>
@@ -270,11 +285,7 @@ const Show = () => {
                     <strong>Comentario:</strong> {selectedReserva.comentario}
                   </p>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="danger" onClick={handleClose}>
-                    Cerrar
-                  </Button>
-                </Modal.Footer>
+                <Modal.Footer></Modal.Footer>
               </Modal>
             )}
           </div>

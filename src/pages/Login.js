@@ -31,7 +31,8 @@ const Login = () => {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault(handleLogin);
     loggin(email, password)
       .then((response) => {
         console.log("responseCont", response);

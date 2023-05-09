@@ -3,7 +3,14 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 function ReservaFinalizada({ reservasFinalizadas, confirmeDelete }) {
   return (
-    <table className="table table-light table-hover table-responsive">
+    <table className="table table-danger table-hover table-responsive">
+      <thead>
+        <tr>
+          <th colSpan="5">
+            <h3>Reservas finalizadas</h3>
+          </th>
+        </tr>
+      </thead>
       <tbody>
         {reservasFinalizadas.map((reserva) => (
           <tr key={reserva.id}>

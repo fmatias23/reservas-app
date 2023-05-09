@@ -48,7 +48,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 106px;
+  width: 109px;
   height: 35px;
   margin-bottom: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -89,7 +89,63 @@
   border-radius: 3px;
   background-color: rgb(225, 97, 97);
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: 30px;
 }
+
+
+.btn-agregar-reserva {
+
+  height: 55.2px;
+  width: 65.2px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+
+}
+
+.container-icon-rfinalizada {
+  height: 55.2px;
+  width: 65.2px;
+  margin-bottom: 10px;
+  display: flex;
+ 
+}
+
+
+.btn-icon-rfinalizada {
+  width: 70px;
+  height: 45px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  margin-bottom: 15px;
+  
+}
+
+.icon-rfinalizadas {
+  height: 35px;
+  width: 30px;
+  
+  
+}
+
+.container-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  flex-direction: column;
+  
+}
+
+
+.name-reservas-finalizadas {
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+
 
  
 
